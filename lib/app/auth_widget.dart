@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:creative_park/app/home-old/jobs/empty_content.dart';
+import 'package:creative_park/common_widgets/empty_content.dart';
 import 'package:creative_park/app/top_level_providers.dart';
 
 class AuthWidget extends ConsumerWidget {

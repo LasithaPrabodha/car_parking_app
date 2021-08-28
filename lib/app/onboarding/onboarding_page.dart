@@ -1,7 +1,6 @@
 import 'package:custom_buttons/custom_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:creative_park/app/onboarding/onboarding_view_model.dart';
 
 class OnboardingPage extends StatelessWidget {
@@ -19,19 +18,25 @@ class OnboardingPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            const FractionallySizedBox(
+              widthFactor: 0.5,
+              child: Image(image: AssetImage('assets/CreativeLogo.png')),
+            ),
+            const SizedBox(
+              height: 12,
+            ),
             Text(
-              'Track your time.\nBecause time counts.',
-              style: Theme.of(context).textTheme.headline4,
+              'Car Parking',
+              style: Theme.of(context).textTheme.headline5,
               textAlign: TextAlign.center,
             ),
-            FractionallySizedBox(
-              widthFactor: 0.5,
-              child: SvgPicture.asset('assets/time-tracking.svg', semanticsLabel: 'Time tracking logo'),
+            const SizedBox(
+              height: 24,
             ),
             CustomRaisedButton(
               onPressed: () => onGetStarted(context),
-              color: Colors.indigo,
               borderRadius: 30,
+              color: Colors.red,
               child: Text(
                 'Get Started',
                 style: Theme.of(context).textTheme.headline5!.copyWith(color: Colors.white),

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:alert_dialogs/alert_dialogs.dart';
+import 'package:creative_park/app/verify/verify_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:creative_park/app/top_level_providers.dart';
 import 'package:creative_park/app/sign_in/sign_in_view_model.dart';
@@ -32,7 +33,7 @@ class SignInPage extends ConsumerWidget {
       },
       child: SignInPageContents(
         viewModel: signInModel,
-        title: 'Architecture Demo',
+        title: 'Creatives\' Car Parking',
       ),
     );
   }
@@ -50,8 +51,21 @@ class SignInPageContents extends StatelessWidget {
     final navigator = Navigator.of(context);
     await navigator.pushNamed(
       AppRoutes.emailPasswordSignInPage,
-      arguments: () => navigator.pop(),
+      arguments: () async {
+        final user = viewModel.auth.currentUser!;
+        if (!user.emailVerified) {
+          user.sendEmailVerification();
+        } else {
+          await verifyEmail(context);
+        }
+        navigator.pop();
+      },
     );
+  }
+
+  Future<void> verifyEmail(BuildContext context) async {
+    final verifyViewModel = context.read(verifyViewModelProvider.notifier);
+    await verifyViewModel.verifyEmail();
   }
 
   @override
@@ -102,20 +116,20 @@ class SignInPageContents extends StatelessWidget {
                 textColor: Colors.white,
                 color: Theme.of(context).primaryColor,
               ),
-              const SizedBox(height: 8),
-              const Text(
-                Strings.or,
-                style: TextStyle(fontSize: 14.0, color: Colors.black87),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 8),
-              SignInButton(
-                key: anonymousButtonKey,
-                text: Strings.goAnonymous,
-                color: Theme.of(context).primaryColor,
-                textColor: Colors.white,
-                onPressed: viewModel.isLoading ? null : viewModel.signInAnonymously,
-              ),
+//              const SizedBox(height: 8),
+//              const Text(
+//                Strings.or,
+//                style: TextStyle(fontSize: 14.0, color: Colors.black87),
+//                textAlign: TextAlign.center,
+//              ),
+//              const SizedBox(height: 8),
+//              SignInButton(
+//                key: anonymousButtonKey,
+//                text: Strings.goAnonymous,
+//                color: Theme.of(context).primaryColor,
+//                textColor: Colors.white,
+//                onPressed: viewModel.isLoading ? null : viewModel.signInAnonymously,
+//              ),
             ],
           ),
         );
